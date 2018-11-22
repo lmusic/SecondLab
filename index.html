@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Task 6</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="newsBlok" id="news1">
+		<h1>Hello, this is WEBAPP for remote access to SERV</h1>
+		<p>Under you can see list of directory in current folder. </p>
+		<span id="path"></span>
+		<Ul ID="UL">
+		</Ul>
+			<button id="deleteButton" onclick="ShowConfirmDialog()">Delete current directory</button>
+			<button onclick="showCreateDialog()">Create new directory</button>
+	</div>
+	
+	<div class="newsBlock" id="block1">
+		<div class="newsContent">
+			<h1>Please enter name <br> of new folder</h1>
+			<p><input class="inputTXT" type="text" id="name" value=""></p>
+			<p><input class="inputBTN" onclick="hideCreateDialog()" type="submit" value="Cancel"></p>
+			<p><input class="inputBTN" onclick="createNewFolder()" type="submit" value="Create" ></p>
+		</div>
+	</div>
+	<div class="newsBlock" id="confirmBlock">
+		<div class="newsContent">
+			<p id="confirmText"></p>
+			<button class="inputBTN" onclick="hideConfirmDialog()">Cancel</button>
+			<button class="inputBTN" onclick="deleteCurrentFolder()">OK</button>
+		</div>
+<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
