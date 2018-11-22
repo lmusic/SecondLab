@@ -1,0 +1,1 @@
+MainFolder - this is the folder where client can do anything they want (create, update, delete or download something)
