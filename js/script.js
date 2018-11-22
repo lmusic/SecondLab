@@ -90,16 +90,6 @@ function ShowConfirmDialog(){
     document.getElementById('confirmBlock').style.display = 'block';
     document.getElementById('confirmText').innerHTML = 'Are you sure you want to delete: ' + "<br>" + '"' + globalPath.toString() + '"';
 }
-function deleteCurrentFolder() {
-    var arr = globalPath.split('/');
-    var value = arr[arr.length-2];
-    globalPath = getPrevPath(globalPath);
-    var path = globalPath + '?' + 'delete=' + value.toString();
-    request.open('GET', path, false);
-    request.send(null);
-    hideConfirmDialog();
-    openFolder();
-}
 function showCreateDialog(){
     document.getElementById('block1').style.display = 'block';
 }
