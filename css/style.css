@@ -21,8 +21,18 @@
       cursor: pointer;
       margin-top: 10px;
       width: 300px; }
-      .newsBlok ul li:hover {
-        background-color: #5eeded; }
+      .newsBlok ul li span {
+        padding-left: 5px;
+        padding-right: 5px; }
+        .newsBlok ul li span:hover {
+          background-color: #5eeded; }
+      .newsBlok ul li a {
+        float: right;
+        margin-right: 10px;
+        padding-left: 5px;
+        padding-right: 5px; }
+        .newsBlok ul li a:hover {
+          background-color: #5eeded; }
     .newsBlok ul li:first-child(2n) {
       background-color: blue; }
   .newsBlok button {
