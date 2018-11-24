@@ -7,9 +7,9 @@ window.onload = openFolder;
 //handler on click on any "li" item
 function handler(e)
 {
-    var liName = e.target.innerHTML.toString();
-    setPathForRequestedDir(liName)  // path will be written to "globalPath"
-    if(isFile(liName)){
+    var textInSpan = e.target.innerText
+    setPathForRequestedDir(textInSpan)  // path will be written to "globalPath"
+    if(isFile(textInSpan)){
         downloadFile();
         return;
     }
@@ -19,16 +19,6 @@ function handler(e)
 }
 
 //main functions of App
-function deleteCurrentFolder() {
-    var arr = globalPath.split('/');
-    var value = arr[arr.length-2];
-    globalPath = getPrevPath(globalPath);
-    var path = globalPath + '?' + 'delete=' + value.toString();
-    request.open('GET', path, false);
-    request.send(null);
-    hideConfirmDialog();
-    openFolder();
-}
 function createNewFolder() {
     var value = document.getElementById('name').value;
     var path = globalPath + '?' + 'create=' + value.toString();
@@ -53,16 +43,21 @@ function downloadFile() {
     window.location = globalPath;
     globalPath = getPrevPath(globalPath);
 }
+function downloadItem(e) {
+    var nameOfItem = getNameOfItem(e);
+    window.location = globalPath + '?download=' + nameOfItem.toString();
+}
+function removeItem(e) {
+    var removeTarget = e.target.parentElement.children[0].innerHTML;
+    request.open('GET', globalPath + '?delete=' + removeTarget, false);
+    request.send(null);
+    hideConfirmDialog();
+    openFolder();
+}
 
 //functions Filling and configure Html tags
 function SetCurrentDirectoryString() {
     document.getElementById('path').innerHTML = 'Current directory: "' + globalPath.toString() +'"';
-    if(globalPath == 'MainFolder/'){
-        document.getElementById('deleteButton').style.display = 'none';
-    }
-    else{
-        document.getElementById('deleteButton').style.display = 'block';
-    }
 }
 function FillUl(listOfItems) {
     document.getElementById('UL').innerHTML = '';
@@ -77,18 +72,42 @@ function FillUl(listOfItems) {
 }
 function CreateNewLiItem(name) {
     var li = document.createElement('li');
-    li.innerHTML = name;
+
     if(name == 'back'){
         li.className = 'back'
+        li.innerText = 'back'
+        li.addEventListener('click', handler)
     }
-    li.addEventListener('click', handler);
+    else{
+        var download = document.createElement('a');
+        var remove = document.createElement('a');
+        var span = document.createElement('span');
+
+        span.innerText = name;
+
+        span.addEventListener('click', handler);
+
+        download.innerText = 'download';
+        download.className = 'download';
+        download.addEventListener('click', downloadItem);
+
+        remove.innerText = 'remove';
+        remove.className = 'remove';
+        remove.addEventListener('click', ShowConfirmDialog);
+
+        li.appendChild(span);
+        li.appendChild(remove);
+        li.appendChild(download);
+    }
+
     document.getElementById('UL').appendChild(li);
 }
 
 //functions for dialog with users
-function ShowConfirmDialog(){
+function ShowConfirmDialog(e){
+    var item = getNameOfItem(e);
     document.getElementById('confirmBlock').style.display = 'block';
-    document.getElementById('confirmText').innerHTML = 'Are you sure you want to delete: ' + "<br>" + '"' + globalPath.toString() + '"';
+    document.getElementById('confirmText').innerHTML = item;
 }
 function showCreateDialog(){
     document.getElementById('block1').style.display = 'block';
@@ -123,6 +142,9 @@ function getPrevPath(path) {
         prevPath = prevPath + array[i].toString() + '/';
     }
     return prevPath;
+}
+function getNameOfItem(e) {
+    return e.target.parentElement.innerText.split('removedownload')[0];
 }
 
 //typical crossbrowser initialization of "XMLHttpRequest" object

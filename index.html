@@ -11,8 +11,11 @@
 		<p>Under you can see list of directory in current folder. </p>
 		<span id="path"></span>
 		<Ul ID="UL">
+			<li class=""> <span>oneMoreFolder</span>
+				<a class="remove" href="#">remove</a>
+				<a class="download"href="#">download</a>
+			</li>
 		</Ul>
-			<button id="deleteButton" onclick="ShowConfirmDialog()">Delete current directory</button>
 			<button onclick="showCreateDialog()">Create new directory</button>
 	</div>
 	
@@ -26,9 +29,10 @@
 	</div>
 	<div class="newsBlock" id="confirmBlock">
 		<div class="newsContent">
+			Are you sure you want to remove:
 			<p id="confirmText"></p>
 			<button class="inputBTN" onclick="hideConfirmDialog()">Cancel</button>
-			<button class="inputBTN" onclick="deleteCurrentFolder()">OK</button>
+			<button class="inputBTN" onclick="removeItem(event)">OK</button>
 		</div>
 <script type="text/javascript" src="js/script.js"></script>
 </body>
